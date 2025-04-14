@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Plans - Healthy Wealthy Gym</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="subscription-container">
+            <h2>Choose Your Plan</h2>
+            
+            <div class="plans-grid">
+                <!-- Basic Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3>Basic</h3>
+                        <div class="price">$29.99<span>/month</span></div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Access to basic gym equipment</li>
+                        <li>Standard workout area</li>
+                        <li>Locker room access</li>
+                        <li>Basic fitness assessment</li>
+                        <li>Email support</li>
+                    </ul>
+                    <button class="subscribe-btn" onclick="subscribe('basic')">Subscribe Now</button>
+                </div>
+
+                <!-- Premium Plan -->
+                <div class="plan-card featured">
+                    <div class="plan-header">
+                        <h3>Premium</h3>
+                        <div class="price">$49.99<span>/month</span></div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>All Basic plan features</li>
+                        <li>Access to premium equipment</li>
+                        <li>Personal trainer consultation</li>
+                        <li>Group fitness classes</li>
+                        <li>Sauna and spa access</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="subscribe-btn" onclick="subscribe('premium')">Subscribe Now</button>
+                </div>
+
+                <!-- Elite Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3>Elite</h3>
+                        <div class="price">$79.99<span>/month</span></div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>All Premium plan features</li>
+                        <li>24/7 gym access</li>
+                        <li>Personal training sessions</li>
+                        <li>Nutrition consultation</li>
+                        <li>Massage therapy sessions</li>
+                        <li>VIP support</li>
+                    </ul>
+                    <button class="subscribe-btn" onclick="subscribe('elite')">Subscribe Now</button>
+                </div>
+            </div>
+
+            <div class="payment-info">
+                <h3>Payment Information</h3>
+                <p>All plans are billed monthly. You can cancel anytime.</p>
+                <p>We accept all major credit cards and PayPal.</p>
+            </div>
+
+            <div class="back-button">
+                <button class="btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .subscription-container {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .plan-card.featured {
+            border: 2px solid var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .plan-header h3 {
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .price span {
+            font-size: 0.5em;
+            color: #666;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .subscribe-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .payment-info {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--light-bg);
+            border-radius: 8px;
+        }
+
+        .payment-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .payment-info p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card.featured {
+                transform: none;
+            }
+        }
+    </style>
+
+    <script>
+        function subscribe(plan) {
+            // In a real application, this would handle the subscription process
+            alert('Subscribing to ' + plan + ' plan...');
+            // You would typically redirect to a payment gateway or show a payment form
+        }
+
+        // Check if user is logged in
+        function checkAuth() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+        }
+
+        // Check authentication when page loads
+        window.onload = checkAuth;
+    </script>
+</body>
+</html> 

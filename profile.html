@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Healthy Wealthy Gym</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="profile-container">
+            <h2>My Profile</h2>
+            
+            <div class="profile-grid">
+                <!-- Subscription Plan -->
+                <div class="profile-section">
+                    <h3>Current Subscription Plan</h3>
+                    <div class="subscription-info">
+                        <div class="plan-details">
+                            <div class="plan-name" id="currentPlan">Loading...</div>
+                            <div class="plan-status" id="planStatus">Loading...</div>
+                            <div class="plan-dates">
+                                <div class="date-item">
+                                    <label>Start Date</label>
+                                    <div class="info-value" id="planStartDate">Loading...</div>
+                                </div>
+                                <div class="date-item">
+                                    <label>Next Billing Date</label>
+                                    <div class="info-value" id="planNextBilling">Loading...</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-danger" id="cancelSubscriptionBtn" onclick="confirmCancelSubscription()">Cancel Subscription</button>
+                        </div>
+                        <div class="plan-features">
+                            <h4>Plan Features</h4>
+                            <ul id="planFeaturesList">
+                                <li>Loading features...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Information -->
+                <div class="profile-section">
+                    <h3>Personal Information</h3>
+                    <div class="profile-info">
+                        <div class="profile-avatar">
+                            <img src="https://via.placeholder.com/150" alt="Profile Picture" id="profilePicture">
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Full Name</label>
+                                <div class="info-value" id="fullName"></div>
+                            </div>
+                            <div class="info-item">
+                                <label>Email</label>
+                                <div class="info-value" id="email"></div>
+                            </div>
+                            <div class="info-item">
+                                <label>Phone</label>
+                                <div class="info-value" id="phone"></div>
+                            </div>
+                            <div class="info-item">
+                                <label>Date of Birth</label>
+                                <div class="info-value" id="dob"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fitness Information -->
+                <div class="profile-section">
+                    <h3>Fitness Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Height (cm)</label>
+                            <div class="info-value" id="height"></div>
+                        </div>
+                        <div class="info-item">
+                            <label>Weight (kg)</label>
+                            <div class="info-value" id="weight"></div>
+                        </div>
+                        <div class="info-item">
+                            <label>Fitness Goals</label>
+                            <div class="info-value" id="fitnessGoals"></div>
+                        </div>
+                        <div class="info-item">
+                            <label>Activity Level</label>
+                            <div class="info-value" id="activityLevel"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="profile-section">
+                    <h3>Emergency Contact</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Contact Name</label>
+                            <div class="info-value" id="emergencyName"></div>
+                        </div>
+                        <div class="info-item">
+                            <label>Relationship</label>
+                            <div class="info-value" id="emergencyRelation"></div>
+                        </div>
+                        <div class="info-item">
+                            <label>Phone</label>
+                            <div class="info-value" id="emergencyPhone"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="confirmation-dialog" id="cancelConfirmationDialog">
+        <div class="confirmation-box">
+            <h3>Cancel Subscription</h3>
+            <p>Are you sure you want to cancel your subscription? You will lose access to all premium features at the end of your current billing period.</p>
+            <div class="confirmation-buttons">
+                <button class="btn-confirm" onclick="cancelSubscription()">Yes, Cancel</button>
+                <button class="btn-cancel" onclick="closeConfirmationDialog()">No, Keep Plan</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .profile-container {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .profile-grid {
+            display: grid;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .profile-section {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .profile-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .profile-info {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .profile-avatar {
+            text-align: center;
+        }
+
+        .profile-avatar img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            flex: 1;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .info-item label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .info-value {
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .subscription-info {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .plan-details {
+            flex: 1;
+        }
+
+        .plan-name {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .plan-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .plan-status.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .plan-status.expired {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .plan-dates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .date-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .plan-features {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .plan-features h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .plan-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .confirmation-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirmation-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .confirmation-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .confirmation-box p {
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .confirmation-buttons button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            border: none;
+        }
+
+        .confirmation-buttons .btn-confirm {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .confirmation-buttons .btn-cancel {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .profile-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-grid {
+                width: 100%;
+            }
+
+            .profile-actions {
+                flex-direction: column;
+            }
+
+            .profile-actions .btn {
+                width: 100%;
+            }
+
+            .subscription-info {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // Load saved profile data
+        function loadProfile() {
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (currentUser) {
+                // Display user information
+                document.getElementById('fullName').textContent = currentUser.fullName || 'Not provided';
+                document.getElementById('email').textContent = currentUser.email || 'Not provided';
+                document.getElementById('phone').textContent = currentUser.phone || 'Not provided';
+                document.getElementById('dob').textContent = currentUser.dob || 'Not provided';
+                document.getElementById('height').textContent = currentUser.height || 'Not provided';
+                document.getElementById('weight').textContent = currentUser.weight || 'Not provided';
+                document.getElementById('fitnessGoals').textContent = currentUser.fitnessGoals || 'Not provided';
+                document.getElementById('activityLevel').textContent = currentUser.activityLevel || 'Not provided';
+                document.getElementById('emergencyName').textContent = currentUser.emergencyName || 'Not provided';
+                document.getElementById('emergencyRelation').textContent = currentUser.emergencyRelation || 'Not provided';
+                document.getElementById('emergencyPhone').textContent = currentUser.emergencyPhone || 'Not provided';
+
+                // Load subscription information
+                loadSubscriptionInfo(currentUser);
+            }
+        }
+
+        function loadSubscriptionInfo(user) {
+            // In a real application, this would come from the server
+            const subscriptionInfo = {
+                plan: user.subscriptionPlan || 'Basic',
+                status: user.subscriptionStatus || 'Active',
+                startDate: user.subscriptionStartDate || '2024-01-01',
+                nextBilling: user.subscriptionNextBilling || '2024-02-01',
+                features: getPlanFeatures(user.subscriptionPlan || 'Basic')
+            };
+
+            document.getElementById('currentPlan').textContent = subscriptionInfo.plan + ' Plan';
+            document.getElementById('planStatus').textContent = subscriptionInfo.status;
+            document.getElementById('planStatus').className = 'plan-status ' + subscriptionInfo.status.toLowerCase();
+            document.getElementById('planStartDate').textContent = formatDate(subscriptionInfo.startDate);
+            document.getElementById('planNextBilling').textContent = formatDate(subscriptionInfo.nextBilling);
+
+            const featuresList = document.getElementById('planFeaturesList');
+            featuresList.innerHTML = '';
+            subscriptionInfo.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                featuresList.appendChild(li);
+            });
+        }
+
+        function getPlanFeatures(plan) {
+            const features = {
+                'Basic': [
+                    'Access to basic gym equipment',
+                    'Standard workout area',
+                    'Locker room access',
+                    'Basic fitness assessment',
+                    'Email support'
+                ],
+                'Premium': [
+                    'All Basic plan features',
+                    'Access to premium equipment',
+                    'Personal trainer consultation',
+                    'Group fitness classes',
+                    'Sauna and spa access',
+                    'Priority support'
+                ],
+                'Elite': [
+                    'All Premium plan features',
+                    '24/7 gym access',
+                    'Personal training sessions',
+                    'Nutrition consultation',
+                    'Massage therapy sessions',
+                    'VIP support'
+                ]
+            };
+            return features[plan] || features['Basic'];
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Check if user is logged in
+        function checkAuth() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+        }
+
+        // Check authentication and load profile when page loads
+        window.onload = function() {
+            checkAuth();
+            loadProfile();
+        };
+
+        function confirmCancelSubscription() {
+            document.getElementById('cancelConfirmationDialog').style.display = 'flex';
+        }
+
+        function closeConfirmationDialog() {
+            document.getElementById('cancelConfirmationDialog').style.display = 'none';
+        }
+
+        function cancelSubscription() {
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (currentUser) {
+                // Update user's subscription status
+                currentUser.subscriptionStatus = 'Cancelled';
+                currentUser.subscriptionNextBilling = null;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update the UI
+                loadSubscriptionInfo(currentUser);
+                
+                // Close the dialog
+                closeConfirmationDialog();
+                
+                // Show success message
+                alert('Your subscription has been cancelled. You will continue to have access until the end of your current billing period.');
+            }
+        }
+    </script>
+</body>
+</html> 

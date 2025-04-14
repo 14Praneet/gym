@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - Healthy Wealthy Gym</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .schedule-container {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .schedule-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .schedule-card {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .class-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .class-item:last-child {
+            border-bottom: none;
+        }
+
+        .class-time {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .class-name {
+            color: #666;
+        }
+
+        .book-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .book-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .book-btn.booked {
+            background: #4CAF50;
+            cursor: default;
+        }
+
+        .schedule-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .class-item {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="schedule-container">
+            <div class="schedule-header">
+                <h2>Weekly Class Schedule</h2>
+                <p>Book your preferred classes and manage your fitness routine</p>
+            </div>
+
+            <div class="schedule-grid">
+                <!-- Monday -->
+                <div class="schedule-card">
+                    <h3>Monday</h3>
+                    <div class="class-item">
+                        <span class="class-time">6:00 AM</span>
+                        <span class="class-name">Morning Yoga</span>
+                        <button class="book-btn" onclick="bookClass('monday', 'morning-yoga')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">10:00 AM</span>
+                        <span class="class-name">HIIT Training</span>
+                        <button class="book-btn" onclick="bookClass('monday', 'hiit')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">6:00 PM</span>
+                        <span class="class-name">Zumba</span>
+                        <button class="book-btn" onclick="bookClass('monday', 'zumba')">Book</button>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="schedule-card">
+                    <h3>Tuesday</h3>
+                    <div class="class-item">
+                        <span class="class-time">7:00 AM</span>
+                        <span class="class-name">Pilates</span>
+                        <button class="book-btn" onclick="bookClass('tuesday', 'pilates')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">12:00 PM</span>
+                        <span class="class-name">Boxing</span>
+                        <button class="book-btn" onclick="bookClass('tuesday', 'boxing')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">7:00 PM</span>
+                        <span class="class-name">CrossFit</span>
+                        <button class="book-btn" onclick="bookClass('tuesday', 'crossfit')">Book</button>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="schedule-card">
+                    <h3>Wednesday</h3>
+                    <div class="class-item">
+                        <span class="class-time">6:00 AM</span>
+                        <span class="class-name">Morning Yoga</span>
+                        <button class="book-btn" onclick="bookClass('wednesday', 'morning-yoga')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">4:00 PM</span>
+                        <span class="class-name">Spin Class</span>
+                        <button class="book-btn" onclick="bookClass('wednesday', 'spin')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">6:00 PM</span>
+                        <span class="class-name">Kickboxing</span>
+                        <button class="book-btn" onclick="bookClass('wednesday', 'kickboxing')">Book</button>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="schedule-card">
+                    <h3>Thursday</h3>
+                    <div class="class-item">
+                        <span class="class-time">7:00 AM</span>
+                        <span class="class-name">Pilates</span>
+                        <button class="book-btn" onclick="bookClass('thursday', 'pilates')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">12:00 PM</span>
+                        <span class="class-name">Boxing</span>
+                        <button class="book-btn" onclick="bookClass('thursday', 'boxing')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">7:00 PM</span>
+                        <span class="class-name">CrossFit</span>
+                        <button class="book-btn" onclick="bookClass('thursday', 'crossfit')">Book</button>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="schedule-card">
+                    <h3>Friday</h3>
+                    <div class="class-item">
+                        <span class="class-time">6:00 AM</span>
+                        <span class="class-name">Morning Yoga</span>
+                        <button class="book-btn" onclick="bookClass('friday', 'morning-yoga')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">10:00 AM</span>
+                        <span class="class-name">HIIT Training</span>
+                        <button class="book-btn" onclick="bookClass('friday', 'hiit')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">6:00 PM</span>
+                        <span class="class-name">Zumba</span>
+                        <button class="book-btn" onclick="bookClass('friday', 'zumba')">Book</button>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="schedule-card">
+                    <h3>Saturday</h3>
+                    <div class="class-item">
+                        <span class="class-time">8:00 AM</span>
+                        <span class="class-name">Yoga Flow</span>
+                        <button class="book-btn" onclick="bookClass('saturday', 'yoga-flow')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">10:00 AM</span>
+                        <span class="class-name">Bootcamp</span>
+                        <button class="book-btn" onclick="bookClass('saturday', 'bootcamp')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">12:00 PM</span>
+                        <span class="class-name">Boxing</span>
+                        <button class="book-btn" onclick="bookClass('saturday', 'boxing')">Book</button>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="schedule-card">
+                    <h3>Sunday</h3>
+                    <div class="class-item">
+                        <span class="class-time">9:00 AM</span>
+                        <span class="class-name">Yoga Flow</span>
+                        <button class="book-btn" onclick="bookClass('sunday', 'yoga-flow')">Book</button>
+                    </div>
+                    <div class="class-item">
+                        <span class="class-time">11:00 AM</span>
+                        <span class="class-name">Bootcamp</span>
+                        <button class="book-btn" onclick="bookClass('sunday', 'bootcamp')">Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="schedule-actions">
+                <button class="btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        function checkAuth() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+        }
+
+        function bookClass(day, className) {
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert('Please log in to book classes');
+                return;
+            }
+
+            // Get the button that was clicked
+            const button = event.target;
+            
+            // Check if already booked
+            if (button.classList.contains('booked')) {
+                alert('You have already booked this class');
+                return;
+            }
+
+            // Update button state
+            button.textContent = 'Booked';
+            button.classList.add('booked');
+            button.disabled = true;
+
+            // Store booking in session storage
+            if (!currentUser.bookings) {
+                currentUser.bookings = {};
+            }
+            if (!currentUser.bookings[day]) {
+                currentUser.bookings[day] = [];
+            }
+            currentUser.bookings[day].push(className);
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+            alert('Class booked successfully!');
+        }
+
+        // Load existing bookings when page loads
+        window.onload = function() {
+            checkAuth();
+            
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            if (currentUser && currentUser.bookings) {
+                Object.entries(currentUser.bookings).forEach(([day, classes]) => {
+                    classes.forEach(className => {
+                        const button = document.querySelector(`[onclick="bookClass('${day}', '${className}')"]`);
+                        if (button) {
+                            button.textContent = 'Booked';
+                            button.classList.add('booked');
+                            button.disabled = true;
+                        }
+                    });
+                });
+            }
+        };
+    </script>
+</body>
+</html> 

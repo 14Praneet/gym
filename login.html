@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Healthy Wealthy Gym</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <div id="error" class="error" style="display: none;"></div>
+            <div id="success" class="success" style="display: none;"></div>
+            
+            <form id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+            <p><a href="forgot_password.html">Forgot Password?</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is already logged in
+        window.onload = function() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = 'index.html';
+            }
+        };
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Reset messages
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('success').style.display = 'none';
+            
+            try {
+                // Get users from localStorage
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                // Find user by email
+                const user = users.find(u => u.email === email);
+                
+                if (!user) {
+                    showError("Email not registered. Please register first.");
+                    return false;
+                }
+                
+                // Check password (using basic encoding for demo)
+                if (btoa(password) !== user.password) {
+                    showError("Invalid password. Please try again.");
+                    return false;
+                }
+                
+                // Create session for logged in user
+                sessionStorage.setItem('currentUser', JSON.stringify({
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    fullName: user.fullName,
+                    membership: user.membership
+                }));
+                
+                showSuccess("Login successful! Redirecting to dashboard...");
+                
+                // Redirect to index page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                
+            } catch (error) {
+                showError("An error occurred. Please try again.");
+                console.error('Login error:', error);
+            }
+            
+            return false;
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+        
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+    </script>
+
+    <style>
+        .error {
+            color: red;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid red;
+            border-radius: 4px;
+            background-color: #fff5f5;
+        }
+        .success {
+            color: green;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid green;
+            border-radius: 4px;
+            background-color: #f0fff0;
+        }
+    </style>
+</body>
+</html> 
